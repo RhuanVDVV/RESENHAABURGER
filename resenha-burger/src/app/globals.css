@@ -1,0 +1,10 @@
+@import "tailwindcss";
+
+@theme {
+/* Vermelho iFood/McDonald's para ação e destaque */
+  --color-brand-red: #EA1D2C; 
+  /* Cinza muito claro para fundos (melhor que branco puro para contraste) */
+  --color-brand-light: #F7F7F7;
+  /* Texto escuro para legibilidade */
+  --color-brand-dark: #3E3E3E;
+}
