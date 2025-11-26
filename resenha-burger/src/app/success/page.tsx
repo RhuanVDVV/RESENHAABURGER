@@ -7,6 +7,16 @@ import { CheckCircle, ChefHat, Clock } from 'lucide-react';
 export default function Success() {
   const router = useRouter();
   const [timeLeft, setTimeLeft] = useState(5);
+  const [orderNumber, setOrderNumber] = useState<number | null>(null);
+
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setOrderNumber(Math.floor(Math.random() * 999) + 1);
+    }, 0);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     if (timeLeft === 0) {
@@ -21,24 +31,28 @@ export default function Success() {
     return () => clearInterval(intervalId);
   }, [timeLeft, router]);
 
+  const formattedOrderNumber = orderNumber 
+    ? String(orderNumber).padStart(3, '0') 
+    : '...';
+
   return (
-    // ALTERAÇÃO IHC: Fundo branco para conforto visual e acessibilidade
     <main className="min-h-screen bg-white flex flex-col items-center justify-center text-brand-dark p-6 text-center relative">
       
-      {/* Elemento de Sucesso: Verde é universalmente reconhecido como "OK/Sucesso" */}
       <div className="bg-green-100 p-6 rounded-full mb-6 animate-bounce">
         <CheckCircle size={80} strokeWidth={3} className="text-green-600" />
       </div>
       
       <h1 className="text-3xl font-extrabold mb-2 text-gray-800">Pedido Confirmado!</h1>
       
-      {/* Destaque da Senha: Uso da cor da marca para ênfase, não fundo */}
       <div className="bg-gray-50 border border-gray-100 rounded-2xl p-8 mb-8 w-full max-w-sm shadow-sm">
         <p className="text-lg text-gray-500 font-medium uppercase tracking-widest">Sua senha</p>
-        <span className="font-black text-brand-red text-6xl block mt-2 tracking-tighter">#123</span>
+        
+        {/* Exibição da Senha */}
+        <span className="font-black text-brand-red text-7xl block mt-2 tracking-tighter">
+          #{formattedOrderNumber}
+        </span>
       </div>
       
-      {/* Status do Pedido */}
       <div className="w-full max-w-sm mb-12">
         <div className="flex items-center justify-center gap-2 mb-4 text-gray-400">
           <div className="h-px bg-gray-200 flex-grow"></div>
@@ -57,7 +71,6 @@ export default function Success() {
         </div>
       </div>
 
-      {/* Ações e Contador */}
       <div className="space-y-6 w-full max-w-xs">
         <Link 
           href="/" 
